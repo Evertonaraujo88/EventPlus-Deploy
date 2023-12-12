@@ -23,8 +23,8 @@ const EventosAlunoPage = () => {
   // select mocado
   // const [quaisEventos, setQuaisEventos] = useState([
   const quaisEventos = [
-    { value: 1, text: "Todos os eventos" },
-    { value: 2, text: "Meus eventos" },
+    { value: "1", text: "Todos os eventos" },
+    { value:"2", text: "Meus eventos" },
   ];
 
   const [tipoEvento, setTipoEvento] = useState("1"); //código do tipo do Evento escolhido
