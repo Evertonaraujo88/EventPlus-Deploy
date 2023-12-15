@@ -10,7 +10,7 @@ import NextEvent from "../../components/NextEvent/NextEvent";
 import Container from "../../components/Container/Container";
 import api from "../../Services/Service";
 import Notification from "../../components/Notification/Notification";
-import { nextEventResource } from "../../Services/Service";
+import { nextEventResource, backEventResource } from "../../Services/Service";
 import BackEvent from "../../components/BackEvent/BackEvent";
 
 
@@ -42,7 +42,31 @@ const HomePage = () => {
       }
     }
 
+    async function getBackEvents() {
+      try {
+        const promise = await api.get(backEventResource);
+        const dados = await promise.data;
+        // console.log(dados);
+        setBackEvents(dados); //atualiza o state
+        
+
+      } catch (error) {
+        console.log("não trouxe os próximos eventos, verifique lá!");
+        // setNotifyUser({
+        //   titleNote: "Erro",
+        //   textNote: `Não foi possível carregar os próximos eventos. Verifique a sua conexão com a internet`,
+        //   imgIcon: "danger",
+        //   imgAlt:
+        //   "Imagem de ilustração de erro. Rapaz segurando um balão com símbolo x.",
+        //   showMessage: true,
+        // });
+      }
+    }
+
+
+
     getNextEvents(); //chama a função
+    getBackEvents();
   }, []);
 
   return (
@@ -79,9 +103,9 @@ const HomePage = () => {
           <Title titleText={"Eventos Antigos"} />
 
           <div className="events-box">
-            {nextEvents.map((e) => {
+            {backEvents.map((e) => {
               return (
-                <NextEvent
+                <BackEvent
                   key={e.idEvento}
                   title={e.nomeEvento}
                   description={e.descricao}
