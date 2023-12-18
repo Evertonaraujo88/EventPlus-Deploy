@@ -22,10 +22,7 @@ const HomePage = () => {
   // roda somente na inicialização do componente
   useEffect(() => {
    
-    getNextEvents(); //chama a função
-    getBackEvents();
-  }, []);
- async function getNextEvents() {
+     async function getNextEvents() {
       try {
         const promise = await api.get(nextEventResource);
         const dados = await promise.data;
@@ -66,6 +63,11 @@ const HomePage = () => {
         // });
       }
     }
+
+    getNextEvents(); //chama a função
+    getBackEvents();
+  }, []);
+
 
 
   return (
