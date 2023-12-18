@@ -35,7 +35,7 @@ const Table = ({ dados, fnConnect = null, fnShowModal = null }) => {
 
               <td className="tbal-data__data tbal-data__data--big tbal-data__btn-actions">
                 {/* {e.dataEvento} */}
-                {dateFormateDbToView(e.dataEvento)}
+                {dateFormatDbToView(e.dataEvento)}
               </td>
 
               <td className="tbal-data__data tbal-data__data--big tbal-data__btn-actions">

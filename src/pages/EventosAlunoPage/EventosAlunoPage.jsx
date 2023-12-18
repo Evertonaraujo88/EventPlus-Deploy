@@ -137,8 +137,8 @@ const EventosAlunoPage = () => {
     // console.log(idEvent);
 
     setShowModal(showModal ? false : true);
-    // setUserData({ ...userData, idEvento: idEvent });
-    setIdEvento(idEvent);
+    setUserData({ ...userData, idEvento: idEvent });
+    /* setIdEvento(idEvent); */
     // console.log("após guardar no state do usuário");
     // console.log(idEvent);
   };
@@ -179,7 +179,10 @@ const EventosAlunoPage = () => {
         idEvento: idEvento,
       });
 
-      if (promise.status === 200) {
+      if (promise.status === 201) {
+        const promise = await api.get(commentaryEventIdResource + '?idUsuario=' + idUsuario + '&idEvento=' + idEvento);
+        console.log(promise.data);
+        setComentario(promise.data.descricao)
         alert("Comentário cadastrado com sucesso");
       }
     } catch (error) {
@@ -189,19 +192,27 @@ const EventosAlunoPage = () => {
   };
 
   // remove o comentário - delete
-  const commentaryRemove = async (idComentario) => {
+  const commentaryRemove = async (idComentarioEvento, idUsuario, idEvento) => {
     // alert("Remover o comentário " + idComentario);
 
     try {
-      const promise = await api.delete(
-        `${commentaryEventResource}/${idComentario}`
-      );
-      if (promise.status === 200) {
-        alert("Evento excluído com sucesso!");
+      
+      const GetById = await api.get(commentaryEventIdResource + '?idUsuario=' + idUsuario + '&idEvento=' + idEvento);
+      idComentarioEvento = GetById.data.idComentarioEvento
+
+      const promise = await api.delete(commentaryEventResource + '/' + idComentarioEvento)
+      if (promise.status === 204) {
+
+        const GetDesc = await api.get(commentaryEventIdResource + '?idUsuario=' + idUsuario + '&idEvento=' + idEvento);
+        console.log(promise.data);
+        setComentario(GetDesc.data.descricao)
+       
       }
+
     } catch (error) {
-      console.log("Erro ao excluir ");
+
       console.log(error);
+      return;
     }
   };
 

@@ -21,7 +21,11 @@ const HomePage = () => {
 
   // roda somente na inicialização do componente
   useEffect(() => {
-    async function getNextEvents() {
+   
+    getNextEvents(); //chama a função
+    getBackEvents();
+  }, []);
+ async function getNextEvents() {
       try {
         const promise = await api.get(nextEventResource);
         const dados = await promise.data;
@@ -64,11 +68,6 @@ const HomePage = () => {
     }
 
 
-
-    getNextEvents(); //chama a função
-    getBackEvents();
-  }, []);
-
   return (
     
     <MainContent>
@@ -89,6 +88,8 @@ const HomePage = () => {
                   description={e.descricao}
                   eventDate={e.dataEvento}
                   idEvent={e.idEvento}
+                  buttonLink = {"/eventos-aluno"}
+                  buttonText = {"Conectar"}
                 />
               );
             })}
@@ -103,14 +104,15 @@ const HomePage = () => {
           <Title titleText={"Eventos Antigos"} />
 
           <div className="events-box">
-            {backEvents.map((e) => {
+            {nextEvents.map((e) => {
               return (
                 <BackEvent
-                  key={e.idEvento}
-                  title={e.nomeEvento}
-                  description={e.descricao}
-                  eventDate={e.dataEvento}
-                  idEvent={e.idEvento}
+                key={e.idEvento}
+                title={e.nomeEvento}
+                description={e.descricao}
+                eventDate={e.dataEvento}
+                idEvent={e.idEvento}
+                buttonText = {"Visualizar"}
                 />
               );
             })}
